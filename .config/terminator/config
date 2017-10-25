@@ -1,0 +1,20 @@
+[global_config]
+  inactive_color_offset = 0.746794871795
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.08
+    cursor_color = "#aaaaaa"
+    font = Monospace 11
+    scrollback_infinite = True
+    show_titlebar = False
