@@ -106,4 +106,4 @@ export PATH=$PATH:/home/vinicius/Tools/android-ndk/
 export PATH=$PATH:/home/vinicius/Android/Sdk/build-tools/25.0.2/
 export PATH=$PATH:/home/vinicius/Tools/apkpatcher
 export PATH=$PATH:/home/vinicius/Tools/badada
-source /etc/profile.d/autojump.bash
+source /usr/share/autojump/autojump.bash
