@@ -100,10 +100,22 @@ open(){
     xdg-open $1 > /dev/null 2>&1 &
 }
 
-# my PATH variable
-export PATH=$PATH:/home/vinicius/Android/Sdk/platform-tools/
-export PATH=$PATH:/home/vinicius/Tools/android-ndk/
-export PATH=$PATH:/home/vinicius/Android/Sdk/build-tools/25.0.2/
-export PATH=$PATH:/home/vinicius/Tools/apkpatcher
-export PATH=$PATH:/home/vinicius/Tools/badada
+# Save the original PATH
+if [ -z $ORIGINAL_PATH ]; then
+    export ORIGINAL_PATH=$PATH
+fi
+
+# Set PATH variable
+if [ -f ~/.bash_path ]; then
+    # The right wat to personalize your PATH is
+    #
+    # CUSTOM_PATH=/home/user/tool1
+    # CUSTOM_PATH=$CUSTOM_PATH:/home/user/tool2
+    # CUSTOM_PATH=$CUSTOM_PATH:/home/user/tool3
+    # export PATH=$ORIGINAL_PATH:$CUSTOM_PATH
+    #
+    # If you reload your bashrc it will not be so big
+    source ~/.bash_path
+fi
+
 source /usr/share/autojump/autojump.bash
