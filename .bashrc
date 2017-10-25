@@ -16,8 +16,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # History lenght
-HISTSIZE=20000
-HISTFILESIZE=20000
+HISTSIZE=999999999
+HISTFILESIZE=3000000
+HISTTIMEFORMAT="%F %T -> "
+PROMPT_COMMANT="history -a"
 
 # Window size sanity check
 shopt -s checkwinsize
@@ -53,8 +55,9 @@ trap 'echo -ne "\e[0m"' DEBUG
     # Color support
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
 fi
+
+alias ls='ls -F --color=auto'
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -72,22 +75,26 @@ fi
 
 # Color output
 export LESS=-R
-export LESS_TERMCAP_me=$(printf '\e[0m')
-export LESS_TERMCAP_se=$(printf '\e[0m')
-export LESS_TERMCAP_ue=$(printf '\e[0m')
-export LESS_TERMCAP_mb=$(printf '\e[1;32m')
-export LESS_TERMCAP_md=$(printf '\e[1;34m')
-export LESS_TERMCAP_us=$(printf '\e[1;32m')
-export LESS_TERMCAP_so=$(printf '\e[1;44;1m')
+export LESS_TERMCAP_mb=$'\e[1;31m'     # begin bold
+export LESS_TERMCAP_md=$'\e[1;33m'     # begin blink
+export LESS_TERMCAP_so=$'\e[01;44;37m' # begin reverse video
+export LESS_TERMCAP_us=$'\e[01;37m'    # begin underline
+export LESS_TERMCAP_me=$'\e[0m'        # reset bold/blink
+export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
+export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
+export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 # my aliases
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
-alias python='/usr/bin/python2.7'
-alias nano='vim'
+
+if [ -f "/etc/arch-release" ]; then
+    alias python='/usr/bin/python2.7'
+fi
+
 alias cleanlog='adb logcat -c; tput reset; adb logcat'
-alias apkx="apkx -c enjarify -d procyon"
+alias apkx="apkx -c enjarify"
 
 open(){
     xdg-open $1 > /dev/null 2>&1 &
