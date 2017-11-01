@@ -85,7 +85,7 @@ export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 # my aliases
-alias grep='grep --colour=auto'
+alias grep='grep --colour=always'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
 
@@ -94,11 +94,19 @@ if [ -f "/etc/arch-release" ]; then
 fi
 
 alias cleanlog='adb logcat -c; tput reset; adb logcat'
-alias apkx="apkx -c enjarify"
+alias apkx='echo "apkx -c enjarify"; apkx -c enjarify'
+alias listpkg='echo "adb shell pm list packages -f"; adb shell pm list packages -f'
 
+# Open files with the right program
+# Example: open myfile.pdf
 open(){
     xdg-open $1 > /dev/null 2>&1 &
 }
+
+function cd_up() {
+    cd $(printf "%0.0s../" $(seq 1 $1));
+}
+alias 'cd..'='cd_up'
 
 # Save the original PATH
 if [ -z $ORIGINAL_PATH ]; then
@@ -116,6 +124,12 @@ if [ -f ~/.bash_path ]; then
     #
     # If you reload your bashrc it will not be so big
     source ~/.bash_path
+fi
+
+# Put in this file the configs that you dont want to
+# be followed by yadm
+if [ -f ~/.bash_custom_config ]; then
+    source ~/.bash_custom_config
 fi
 
 source /usr/share/autojump/autojump.bash
