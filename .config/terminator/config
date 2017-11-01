@@ -14,7 +14,8 @@
 [profiles]
   [[default]]
     background_darkness = 0.08
-    cursor_color = "#aaaaaa"
-    font = Monospace 11
+    background_image = None
+    font = Monospace 12
     scrollback_infinite = True
     show_titlebar = False
+    use_system_font = False
