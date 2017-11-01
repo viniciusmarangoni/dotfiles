@@ -3,6 +3,7 @@
 	     '("melpa" . "https://melpa.org/packages/") t)
 
 (setq custom-file "~/.emacs.d/custom.el")    ; Avoid writing in this file (.emacs.el)
+(toggle-frame-fullscreen)                    ; Full Screen
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -11,7 +12,8 @@
       '(doom-themes
         rainbow-delimiters
         powerline
-        autopair))
+        autopair
+        neotree))
 
 ;; Install myPackages if not installed
 (dolist (package myPackages)
@@ -46,6 +48,20 @@
 (set-face-attribute 'show-paren-match-face nil         ;;
                     :weight 'bold :underline nil :overline nil :slant 'normal)
 
+;; Little piece of black magic to highlight the open parenthesis when
+;; the cursor is on closing parenthesis, instead of "one character after"
+
+;; -------------------[ Start Black Magic ]-------------------
+(defadvice show-paren-function 
+  (around show-paren-closing-before
+          activate compile)
+  (if (eq (syntax-class (syntax-after (point))) 5)
+      (save-excursion
+        (forward-char)
+        ad-do-it)
+    ad-do-it))
+;; -------------------[ End Black Magic ]-------------------
+
 (setq-default show-paren-style 'mixed)         ; Set highlight (exp/mixed/paren)
 (fset 'yes-or-no-p 'y-or-n-p)                  ; y/n instead of yes/no
 
@@ -58,3 +74,7 @@
 
 (require 'autopair)                            ; Automagically pair braces and quotes
 (autopair-global-mode)                         ; to enable in all buffers
+
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'nerd))
