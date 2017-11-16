@@ -81,7 +81,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+e layout splith
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -191,6 +191,12 @@ bindsym --release Shift+Print exec "escrotum -s -C && notify-send -t 1500 'Scree
 #assign [class="Nautilus"] 3
 #assign [class="Eog"] 3
 #assign [class="Vlc"] 3
+
+# all programs opens in tabbed mode
+for_window [class=".*"] layout tabbed
+
+# when open new terminator instance, split horizontally
+for_window [class="Terminator"] layout splith
 
 mode "moveit" {
     bindsym Up move up 20px
