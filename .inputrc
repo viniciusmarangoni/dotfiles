@@ -5,7 +5,10 @@ set meta-flag on
 set input-meta on
 set convert-meta off
 set output-meta on
+
+$if Bash
 set colored-stats on
+$endif
 
 $if mode=emacs
 

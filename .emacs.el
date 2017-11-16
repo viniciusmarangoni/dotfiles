@@ -12,6 +12,7 @@
       '(doom-themes
         rainbow-delimiters
         powerline
+        stickyfunc-enhance
         autopair
         neotree))
 
@@ -108,3 +109,14 @@
 
 ;; Show only one active window when opening multiple files at the same time.
 (add-hook 'window-setup-hook 'delete-other-windows)
+
+;; Find the variable's type
+(require 'semantic)
+(require 'stickyfunc-enhance)
+(semantic-mode 1)
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+(global-semantic-idle-summary-mode 1)
+(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+;;
+
