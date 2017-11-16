@@ -3,7 +3,7 @@
 	     '("melpa" . "https://melpa.org/packages/") t)
 
 (setq custom-file "~/.emacs.d/custom.el")    ; Avoid writing in this file (.emacs.el)
-(toggle-frame-fullscreen)                    ; Full Screen
+;; (toggle-frame-fullscreen)                    ; Full Screen
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
