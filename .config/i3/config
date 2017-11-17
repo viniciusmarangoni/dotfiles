@@ -193,10 +193,12 @@ bindsym --release Shift+Print exec "escrotum -s -C && notify-send -t 1500 'Scree
 #assign [class="Vlc"] 3
 
 # all programs opens in tabbed mode
-for_window [class=".*"] layout tabbed
+#for_window [class=".*"] layout tabbed
 
 # when open new terminator instance, split horizontally
-for_window [class="Terminator"] layout splith
+#for_window [class="Terminator"] layout splith
+
+for_window [class="Emacs"] layout tabbed
 
 mode "moveit" {
     bindsym Up move up 20px
