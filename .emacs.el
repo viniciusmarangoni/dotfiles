@@ -46,6 +46,7 @@
 (menu-bar-mode -1)                             ; Disable menubar
 (show-paren-mode 1)                            ; Highlight parenthesis pairs
 (set-face-background 'show-paren-match-face "#ffffff") ; Color of parenthesis pairs
+(setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))    ; backup in one place. flat, no tree structure
 (set-face-attribute 'show-paren-match-face nil         ;;
                     :weight 'bold :underline nil :overline nil :slant 'normal)
 
