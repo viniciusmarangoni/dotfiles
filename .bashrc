@@ -99,9 +99,7 @@ alias listpkg='echo "adb shell pm list packages -f"; adb shell pm list packages 
 
 # Open files with the right program
 # Example: open myfile.pdf
-open(){
-    xdg-open $1 > /dev/null 2>&1 &
-}
+alias open='xdg-open &>/dev/null'
 
 function cd_up() {
     cd $(printf "%0.0s../" $(seq 1 $1));
