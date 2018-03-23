@@ -7,7 +7,7 @@ case $- in
 esac
 
 # set editor
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/emacs
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -45,9 +45,17 @@ fi
 
 # Prompt
 if [ -n "$SSH_CONNECTION" ]; then
-    export PS1="\[$(tput setaf 1)\]┌─╼\[$(tput setaf 5)\] \h \[$(tput setaf 7)\][\w]\n\[$(tput setaf 1)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 1)\]└────╼ \[$(tput setaf 7)\][ssh]\"; else echo \"\[$(tput setaf 1)\]└╼ \[$(tput setaf 7)\][ssh]\"; fi) \[$(tput setaf 7)\]"
+    if [[ $EUID -ne 0 ]]; then
+        export PS1="\[$(tput setaf 1)\]┌─╼\[$(tput setaf 5)\] \h \[$(tput setaf 7)\][\w]\n\[$(tput setaf 1)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 1)\]└────╼ \[$(tput setaf 7)\][ssh]\"; else echo \"\[$(tput setaf 1)\]└╼ \[$(tput setaf 7)\][ssh]\"; fi) \[$(tput setaf 7)\]"
+    else
+        export PS1="\[$(tput setaf 1)\]┌─╼\[$(tput setaf 5)\] \h \[$(tput setaf 7)\][\w]\n\[$(tput setaf 1)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 1)\]└────╼ \[$(tput setaf 7)\][ssh root] #\"; else echo \"\[$(tput setaf 1)\]└╼ \[$(tput setaf 7)\][ssh root] #\"; fi) \[$(tput setaf 7)\]"
+    fi
 else
-    export PS1="\[$(tput setaf 12)\]┌─╼\[$(tput setaf 6)\] \h \[$(tput setaf 12)\][\w]\n\[$(tput setaf 12)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 12)\]└────╼\"; else echo \"\[$(tput setaf 12)\]└╼\"; fi) \[$(tput setaf 7)\]"
+    if [[ $EUID -ne 0 ]]; then
+        export PS1="\[$(tput setaf 12)\]┌─╼\[$(tput setaf 6)\] \h \[$(tput setaf 12)\][\w]\n\[$(tput setaf 12)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 12)\]└────╼\"; else echo \"\[$(tput setaf 12)\]└╼\"; fi) \[$(tput setaf 7)\]"
+    else
+        export PS1="\[$(tput setaf 1)\]┌─╼\[$(tput setaf 5)\] \h \[$(tput setaf 7)\][\w]\n\[$(tput setaf 1)\]\$(if [[ \$? == 0 ]]; then echo \"\[$(tput setaf 1)\]└────╼ \[$(tput setaf 7)\][root] #\"; else echo \"\[$(tput setaf 1)\]└╼ \[$(tput setaf 7)\][root] #\"; fi) \[$(tput setaf 7)\]"
+    fi
 fi
 
 trap 'echo -ne "\e[0m"' DEBUG
@@ -96,6 +104,7 @@ fi
 alias cleanlog='adb logcat -c; tput reset; adb logcat'
 alias apkx='echo "apkx -c enjarify"; apkx -c enjarify'
 alias listpkg='echo "adb shell pm list packages -f"; adb shell pm list packages -f'
+alias vsu='if [[ $EUID -eq 0 ]]; then echo -ne "\n[YOU ARE ALREADY ROOT]\n\n"; else sudo bash --init-file ~/.bashrc; fi'
 
 # Open files with the right program
 # Example: open myfile.pdf
