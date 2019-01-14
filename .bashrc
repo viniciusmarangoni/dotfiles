@@ -19,7 +19,7 @@ shopt -s histappend
 HISTSIZE=999999999
 HISTFILESIZE=3000000
 HISTTIMEFORMAT="%F %T -> "
-PROMPT_COMMANT="history -a"
+PROMPT_COMMAND="history -a"
 
 # Window size sanity check
 shopt -s checkwinsize
