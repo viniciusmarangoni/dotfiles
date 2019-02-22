@@ -7,7 +7,7 @@ case $- in
 esac
 
 # set editor
-export EDITOR=/usr/bin/emacs
+export EDITOR=/usr/bin/vim
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -139,4 +139,3 @@ if [ -f ~/.bash_custom_config ]; then
     source ~/.bash_custom_config
 fi
 
-source /usr/share/autojump/autojump.bash
