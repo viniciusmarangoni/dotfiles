@@ -28,22 +28,17 @@ command=/usr/lib/i3blocks/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
-[customvolume]
-full_text=♪ VOL
-command=echo "♪ VOL" && XDG_CURRENT_DESKTOP=GNOME gnome-control-center sound 2>&1 >/dev/null &
-
 # Volume indicator
 #
 # The first parameter sets the step (and units to display)
 # The second parameter overrides the mixer selection
 # See the script for details.
-#[volume]
-#label=VOL
-#label=♪ VOL
-#instance=Master
+[volume]
+label=♪ VOL
+instance=Master
 ##instance=PCM
-#interval=once
-#signal=10
+interval=persist
+signal=10
 
 # Network interface monitoring
 #

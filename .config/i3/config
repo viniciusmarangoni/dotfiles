@@ -30,7 +30,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id tilix
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -168,12 +168,35 @@ exec --no-startup-id nm-applet
 # reconfigure wallpaper
 exec --no-startup-id nitrogen --restore
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && pkill -SIGRTMIN+10 i3blocks #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && pkill -SIGRTMIN+10 i3blocks #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
+## Volume control
+
+# Path to volume control, without trailing slash
+set $volumepath ~/Tools/i3-volume
+
+# Command for the status line (used with -t, requires -u)
+#   ie: i3blocks, i3status
+set $statuscmd i3blocks
+
+# Signal used to update the status line (used with -u, requires -t)
+#   i3blocks uses SIGRTMIN+10 by default
+#   i3status uses SIGUSR1 by default
+set $statussig SIGRTMIN+10
+
+# Amount to increase/decrease volume as a percentage (used with -i, -d)
+set $volumestep 5
+
+# pulseaudio-utils settings when not using alsa-utils
+#
+# Symbolic name for sink (numeric index not supported) (used with -s $sinkname)
+#   Recommended: comment out this setting and omit the -s option to use default sink
+#   List sink names: pacmd list-sinks | awk -F "[<>]" '/^\s+name: <.*>/{print $2}'
+set $sinkname alsa_output.pci-0000_06_00.1.hdmi-stereo-extra3
+
+# Using pulseaudio-utils (append "-s $sinkname" without quotes to override default sink)
+bindsym XF86AudioRaiseVolume exec $volumepath/volume -np -i $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioLowerVolume exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statussig
+bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
@@ -183,29 +206,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 # clipboard shortcuts
 
-bindsym --release Print exec "mkdir -p ~/screenshots/ && escrotum ~/screenshots/`date +%Y-%m-%d_%H-%M-%S`_screenshot.png && notify-send -t 1500 'Screenshot saved in ~/screenshots/'"
-bindsym --release Control+Shift+Print exec "mkdir -p ~/screenshots/ && escrotum -s ~/screenshots/`date +%Y-%m-%d_%H-%M-%S`_screenshot.png && notify-send -t 1500 'Screenshot saved in ~/screenshots/'"
-bindsym --release Shift+Print exec "escrotum -s -C && notify-send -t 1500 'Screenshot saved in Clipboard'"
-
-# terminal opens in the 1st workspace
-#assign [class="Terminator"] 1
-
-# browsers open in the 3rd workspace
-#assign [class="chrome"] 2
-#assign [class="Firefox"] 2
-
-# other apps open in the 2nd workspace
-#assign [class="Nautilus"] 3
-#assign [class="Eog"] 3
-#assign [class="Vlc"] 3
-
-# all programs opens in tabbed mode
-#for_window [class=".*"] layout tabbed
-
-# when open new terminator instance, split horizontally
-#for_window [class="Terminator"] layout splith
-
-for_window [class="Emacs"] layout tabbed
+bindsym --release Print exec "flameshot gui"
 
 mode "moveit" {
     bindsym Up move up 150px
