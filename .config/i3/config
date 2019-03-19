@@ -162,6 +162,13 @@ bindsym $mod+r mode "resize"
 exec "setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl"
 #exec "setxkbmap -model abnt2 -layout br -variant abnt2"
 
+# disable monitor power off when idle
+exec "xset s 20000 20000"
+exec "xset s off"
+exec "xset dpms 20000 20000 20000"
+exec "xset -dpms"
+
+
 # start network-manager-applet
 exec --no-startup-id nm-applet
 
@@ -206,7 +213,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 # clipboard shortcuts
 
-bindsym --release Print exec "killall flameshot; flameshot gui"
+bindsym --release Print exec "killall /usr/bin/flameshot; killall -9 /usr/bin/flameshot; /usr/bin/flameshot & /usr/bin/flameshot gui"
 
 mode "moveit" {
     bindsym Up move up 150px
