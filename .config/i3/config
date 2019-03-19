@@ -213,7 +213,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 # clipboard shortcuts
 
-bindsym --release Print exec "killall /usr/bin/flameshot; killall -9 /usr/bin/flameshot; /usr/bin/flameshot & /usr/bin/flameshot gui"
+bindsym --release Print exec "killall /usr/bin/flameshot; killall -9 /usr/bin/flameshot; /usr/bin/flameshot & sleep 0.05 && /usr/bin/flameshot gui"
 
 mode "moveit" {
     bindsym Up move up 150px
